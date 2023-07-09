@@ -13,6 +13,35 @@ RSpec.describe 'User Show Page' do
         }
       )
       .to_return(status: 200, body: movie_detailsj2, headers: {})
+
+      movie_detailsj2 = File.read('spec/fixtures/movie_details_jaws2.json')
+      stub_request(:get, "https://api.themoviedb.org/3/movie/4?api_key=#{ENV['TMDB-KEY']}&append_to_response=credits,reviews,images").
+      with(
+        headers: {
+       'Accept'=>'*/*',
+       'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+       'User-Agent'=>'Faraday v2.7.9'
+        }).
+      to_return(status: 200, body: movie_detailsj2, headers: {})
+
+      jaws2_image = "spec/fixtures/jaws2_image"
+      stub_request(:get, "https://image.tmdb.org/t/p/w300/cN3ijEwsn4kBaRuHfcJpAQJbeWe.jpg.jpg?").
+         with(
+           headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent'=>'Faraday v2.7.9'
+           }).
+         to_return(status: 200, body: jaws2_image, headers: {})
+      stub_request(:get, "https://image.tmdb.org/t/p/w300/cN3ijEwsn4kBaRuHfcJpAQJbeWe.jpg.jpg?api_key=ee56bd2e560a84f6136dd019214eb695").
+         with(
+           headers: {
+          'Accept'=>'*/*',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent'=>'Faraday v2.7.9'
+           }).
+         to_return(status: 200, body: "", headers: {})
+  
     visit "/users/#{@user1.id}"
   end
 
