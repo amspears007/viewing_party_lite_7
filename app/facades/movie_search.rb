@@ -27,4 +27,10 @@ class MovieSearch
     movie_data = get_url("/3/movie/#{id}?append_to_response=credits,reviews,images")
     Movie.new(movie_data)
   end
+
+  def movie_image(id)
+    movie_data = get_url("/3/movie/#{id}?append_to_response=credits,reviews,images")
+    poster_path = movie_data[:images][:posters].first[:file_path]
+    get_url("https://image.tmdb.org/t/p/w300#{poster_path}.jpg")
+  end
 end

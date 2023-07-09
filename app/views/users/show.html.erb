@@ -8,6 +8,7 @@
   <ol>
     <% @user.parties_invited.each do |party| %>
       <li><%= party.movie_title %>- Viewing Party </li>
+      <p><%=  MovieSearch.new.movie_image(party.movie_id)%></p>
         <ul>
           <li>Day: <%= party.day %></li>
           <li>Time: <%= party.start_time %></li>
